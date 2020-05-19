@@ -1,1 +1,1 @@
-mkdir testingscript
+sudo mkdir testingscript
