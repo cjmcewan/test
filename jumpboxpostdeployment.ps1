@@ -25,3 +25,13 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.We
 choco install visualstudiocode -y
 choco install X2Go -y
 choco install Putty -y
+
+#Set up user folder structure
+Get-WindowsCapability -Online | ? Name -Like 'OpenSSH*'
+Set-Service ssh-agent -StartupType Automatic
+Start-Service -Name ssh-agent
+Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+Set-Service sshd -StartupType Automatic
+Start-Service -Name sshd
+ssh $Username@localhost | echo $Password
+echo Exit
