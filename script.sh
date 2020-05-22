@@ -1,1 +1,2 @@
-sudo mkdir /home/dsvmadmin/testingscript
+directory=$1
+sudo mkdir /home/dsvmadmin/$directory
