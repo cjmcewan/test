@@ -6,10 +6,30 @@ $Fullname=$args[2]
 $Description=$args[3]
 $UserGroup=$args[4]
 
-$methodName = 'UserEnvCP'
-$script:nativeMethods = @();
-
 $SecurePassword=ConvertTo-SecureString $Password –asplaintext –force 
+
+# Get local accounts module
+Get-Command -Module  Microsoft.PowerShell.LocalAccounts
+
+#Create user
+New-LocalUser $Username -Description $Description -Password $SecurePassword
+Set-LocalUser -Name $Username -Fullname $Fullname
+
+#Add user to suitable group
+Add-LocalGroupMember -Group $UserGroup -Member $Username
+
+# Install Chocolatey
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+# Install Software
+choco install visualstudiocode -y
+choco install X2Go -y 
+choco install Putty -y
+
+$UserName=$args[0]
+Write-Output $UserName
+
+
 
 #function to register a native method
 function Register-NativeMethod
@@ -59,15 +79,8 @@ function Add-NativeMethods
 "@
 }
 
-# Get local accounts module
-Get-Command -Module  Microsoft.PowerShell.LocalAccounts
-
-#Create user
-New-LocalUser $Username -Description $Description -Password $SecurePassword
-Set-LocalUser -Name $Username -Fullname $Fullname
-
-#Add user to suitable group
-Add-LocalGroupMember -Group $UserGroup -Member $Username
+$methodName = 'UserEnvCP'
+$script:nativeMethods = @();
 
 Register-NativeMethod "userenv.dll" "int CreateProfile([MarshalAs(UnmanagedType.LPWStr)] string pszUserSid,`
   [MarshalAs(UnmanagedType.LPWStr)] string pszUserName,`
@@ -75,12 +88,12 @@ Register-NativeMethod "userenv.dll" "int CreateProfile([MarshalAs(UnmanagedType.
 
 Add-NativeMethods -typeName $MethodName;
 
-$localUser = New-Object System.Security.Principal.NTAccount("$UserName");
+$localUser = New-Object System.Security.Principal.NTAccount("$Username");
 $userSID = $localUser.Translate([System.Security.Principal.SecurityIdentifier]);
 $sb = new-object System.Text.StringBuilder(260);
 $pathLen = $sb.Capacity;
 
-Write-Verbose "Creating user profile for $Username";
+Write-Verbose "Creating user profile for $UserName";
 try
 {
     [UserEnvCP]::CreateProfile($userSID.Value, $Username, $sb, $pathLen) | Out-Null;
@@ -90,12 +103,3 @@ catch
     Write-Error $_.Exception.Message;
     break;
 }
-
-
-# Install Chocolatey
-Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-
-# Install Software
-choco install visualstudiocode -y
-choco install X2Go -y 
-choco install Putty -y
