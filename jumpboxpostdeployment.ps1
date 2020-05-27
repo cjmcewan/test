@@ -1,10 +1,10 @@
 Set-ExecutionPolicy RemoteSigned -force
 
-$Username=$args[0]
-$Password=$args[1]
-$Fullname=$args[2]
-$Description=$args[3]
-$UserGroup=$args[4]
+$Username="callum.mcewan"
+$Password="testing_123$"
+$Fullname="Callum McEwan"
+$Description="Amey"
+$UserGroup=$args"Administrators"
 
 $SecurePassword=ConvertTo-SecureString $Password –asplaintext –force 
 
