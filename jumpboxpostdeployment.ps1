@@ -8,13 +8,6 @@ $UserGroup=$args[4]
 
 $SecurePassword=ConvertTo-SecureString $Password –asplaintext –force 
 
-whoami > C:\stupidlogs.txt
-$Username > C:\Username.txt
-$Password > C:\Password.txt
-$Fullname > C:\Fullname.txt
-$Description > C:\Description.txt
-$UserGroup > C:\UserGroup.txt
-
 # Get local accounts module
 Get-Command -Module  Microsoft.PowerShell.LocalAccounts
 
@@ -26,9 +19,10 @@ Set-LocalUser -Name $Username -Fullname $Fullname
 Add-LocalGroupMember -Group $UserGroup -Member $Username
 
 # Install Chocolatey
-#Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 # Install Software
-#choco install visualstudiocode -y
-#choco install X2Go -y
-#choco install Putty -y
+choco install visualstudiocode -y
+choco install X2Go -y 
+choco install Putty -y 
+
