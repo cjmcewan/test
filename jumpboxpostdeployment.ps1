@@ -8,6 +8,8 @@ $UserGroup=$args[4]
 
 $SecurePassword=ConvertTo-SecureString $Password –asplaintext –force 
 
+whoami > C:\stupidlogs.txt
+
 # Get local accounts module
 Get-Command -Module  Microsoft.PowerShell.LocalAccounts
 
