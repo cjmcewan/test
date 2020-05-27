@@ -1,4 +1,4 @@
-Set-ExecutionPolicy Unrestricted -force
+Set-ExecutionPolicy RemoteSigned -force
 
 $Username=$args[0]
 $Password=$args[1]
