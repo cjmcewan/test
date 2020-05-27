@@ -4,7 +4,7 @@ $Username="callum.mcewan"
 $Password="testing_123$"
 $Fullname="Callum McEwan"
 $Description="Amey"
-$UserGroup=$args"Administrators"
+$UserGroup="Administrators"
 
 $SecurePassword=ConvertTo-SecureString $Password –asplaintext –force 
 
