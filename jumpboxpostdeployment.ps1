@@ -9,6 +9,11 @@ $UserGroup=$args[4]
 $SecurePassword=ConvertTo-SecureString $Password –asplaintext –force 
 
 whoami > C:\stupidlogs.txt
+$Username > C:\Username.txt
+$Password > C:\Password.txt
+$Fullname > C:\Fullname.txt
+$Description > C:\Description.txt
+$UserGroup > C:\UserGroup.txt
 
 # Get local accounts module
 Get-Command -Module  Microsoft.PowerShell.LocalAccounts
