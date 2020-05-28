@@ -6,7 +6,7 @@ $Fullname=$args[2]
 $Description=$args[3]
 $UserGroup=$args[4]
 
-$SecurePassword=ConvertTo-SecureString $Password -asplaintext -force 
+$SecurePassword=ConvertTo-SecureString $Password -AsPlainText -Force 
 
 # Get local accounts module
 Get-Command -Module  Microsoft.PowerShell.LocalAccounts
