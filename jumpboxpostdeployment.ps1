@@ -88,7 +88,7 @@ $userSID = $localUser.Translate([System.Security.Principal.SecurityIdentifier]);
 $sb = new-object System.Text.StringBuilder(260);
 $pathLen = $sb.Capacity;
 
-Write-Verbose "Creating user profile for $UserName";
+Write-Verbose "Creating user profile for $Username";
 try
 {
     [UserEnvCP]::CreateProfile($userSID.Value, $Username, $sb, $pathLen) | Out-Null;
